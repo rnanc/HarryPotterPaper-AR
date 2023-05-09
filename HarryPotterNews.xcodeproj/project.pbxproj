@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CCCEA702A0AB41900FA0702 /* harry.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3CCCEA6F2A0AB41900FA0702 /* harry.mp4 */; };
 		3CD573162A0AAE2E0086D1E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD573152A0AAE2E0086D1E2 /* AppDelegate.swift */; };
 		3CD573182A0AAE2E0086D1E2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CD573172A0AAE2E0086D1E2 /* art.scnassets */; };
 		3CD5731A2A0AAE2E0086D1E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD573192A0AAE2E0086D1E2 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3CCCEA6F2A0AB41900FA0702 /* harry.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = harry.mp4; sourceTree = "<group>"; };
 		3CD573122A0AAE2E0086D1E2 /* HarryPotterNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarryPotterNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD573152A0AAE2E0086D1E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CD573172A0AAE2E0086D1E2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				3CD5731B2A0AAE2E0086D1E2 /* Main.storyboard */,
 				3CD5731E2A0AAE2F0086D1E2 /* Assets.xcassets */,
 				3CD573202A0AAE2F0086D1E2 /* LaunchScreen.storyboard */,
+				3CCCEA6F2A0AB41900FA0702 /* harry.mp4 */,
 			);
 			path = HarryPotterNews;
 			sourceTree = "<group>";
@@ -124,6 +127,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CD573182A0AAE2E0086D1E2 /* art.scnassets in Resources */,
+				3CCCEA702A0AB41900FA0702 /* harry.mp4 in Resources */,
 				3CD573222A0AAE2F0086D1E2 /* LaunchScreen.storyboard in Resources */,
 				3CD5731F2A0AAE2F0086D1E2 /* Assets.xcassets in Resources */,
 				3CD5731D2A0AAE2E0086D1E2 /* Main.storyboard in Resources */,

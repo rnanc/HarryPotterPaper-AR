@@ -1,9 +1,3 @@
-//
-//  ViewController.swift
-//  HarryPotterNews
-//
-//  Created by Renan Carneiro on 09/05/23.
-//
 
 import UIKit
 import SceneKit
@@ -20,20 +14,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
+        sceneView.showsStatistics = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
+        let configuration = ARImageTrackingConfiguration()
+        
+        if let trackedImages = ARReferenceImage.referenceImages(inGroupNamed: "PaperImages",
+                                                                bundle: Bundle.main) {
+            configuration.trackingImages = trackedImages
+            
+            configuration.maximumNumberOfTrackedImages = 1
+        }
 
         // Run the view's session
         sceneView.session.run(configuration)
@@ -47,28 +42,54 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 
     // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
+
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
+        guard let imageAnchor = anchor as? ARImageAnchor else {return nil}
+        let node = ConfigNode(imageAnchor: imageAnchor)
+
         return node
     }
-*/
     
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        guard let imageAnchor = anchor as? ARImageAnchor else {return}
         
+        if imageAnchor.isTracked,
+           node.childNodes.isEmpty,
+           let videoNode = ConfigNode(imageAnchor: imageAnchor) {
+            node.addChildNode(videoNode)
+        } else if !imageAnchor.isTracked,
+                  node.childNodes.count == 1 {
+            node.childNodes.first?.removeFromParentNode()
+        }
     }
     
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
+    func ConfigNode(imageAnchor: ARImageAnchor) -> SCNNode? {
+        let node = SCNNode()
+        guard let name = imageAnchor.referenceImage.name else {return nil}
+        let videoNode = SKVideoNode(fileNamed: "\(name).mp4")
+        videoNode.play()
         
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
+        let videoScene = SKScene(size: CGSize(width: 640,
+                                              height: 360))
         
+        videoNode.position = CGPoint(x: videoScene.size.width/2,
+                                     y: videoScene.size.height/2)
+        
+        videoNode.yScale = -1.0
+        
+        videoScene.addChild(videoNode)
+        
+        let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width,
+                             height: imageAnchor.referenceImage.physicalSize.height)
+        
+        plane.firstMaterial?.diffuse.contents = videoScene
+        
+        let planeNode = SCNNode(geometry: plane)
+        
+        planeNode.eulerAngles.x = -.pi/2
+
+        node.addChildNode(planeNode)
+        
+        return node
     }
 }
